@@ -46,7 +46,12 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
-    pass  
+    '''
+    Reads in dataframe and a database_filename in the form "filename.db"
+    Outputs the dataframe to a SQL database at the given filepath
+    '''
+    engine = create_engine('sqlite:///'+ database_filename)
+    df.to_sql(database_filename, engine, index=False, if_exists = 'replace') 
 
 
 def main():
