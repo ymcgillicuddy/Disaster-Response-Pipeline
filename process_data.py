@@ -7,10 +7,11 @@ import pandas as pd
 
 def load_data(messages_filepath, categories_filepath):
     '''
-    Reads in two data files and assigns them to the variables "messages" and "categories"
+    Reads in two data files and merges them into a single dataframe
     '''
     messages = pd.read_csv(messages_filepath, encoding='latin-1')
     categories = pd.read_csv(categories_filepath, encoding='latin-1')
+    df = messages.merge(categories, on='id')
 
 
 def clean_data(df):
