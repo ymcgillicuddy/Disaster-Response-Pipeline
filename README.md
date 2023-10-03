@@ -17,7 +17,7 @@ The ML Pipeline contains functions that:
 
 ## ETL Pipeline
 ### Components
-* Jupyter Notebook - included to show data exploration process
+* Jupyter Notebook - 'ETL Pipeline Preparation.ipynb' - included to show data exploration process
 * Python file - 'process_data.py'
 * CSV files - 'messages.csv', 'categories.csv'
 * SQL database - 'DisasterResponse.db' - **_output_**
