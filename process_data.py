@@ -6,7 +6,11 @@ import pandas as pd
 
 
 def load_data(messages_filepath, categories_filepath):
-    pass
+    '''
+    Reads in two data files and assigns them to the variables "messages" and "categories"
+    '''
+    messages = pd.read_csv(messages_filepath, encoding='latin-1')
+    categories = pd.read_csv(categories_filepath, encoding='latin-1')
 
 
 def clean_data(df):
