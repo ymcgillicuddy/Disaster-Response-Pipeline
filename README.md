@@ -2,11 +2,17 @@
 Udacity Data Science Project 2
 
 ## Overview
+The ETL Pipeline reads reads in two data files containing social media data about natural disasters and prepares them for the ML Pipeline.  Details on both pipelines are separated below for clarity.
+
+The ETL Pipline contains functions that:
+* Load in the data files
+
+  
 What this code does and why
 
 Techniques involved
 
-Two pipelines.
+The ML Pipeline contains functions that:
 
 ## ETL Pipeline
 ### Components
