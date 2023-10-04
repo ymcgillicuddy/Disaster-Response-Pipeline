@@ -14,7 +14,7 @@ The ETL Pipline contains functions that:
 The ML Pipeline contains functions that:
 * **_load_data_**: Loads in the SQL database and defines X and Y values
 * **_tokenize_**: Uses Natural Language Toolkit (NLTK) to standardise text and prepare it for the ML model through tokenization, part-of-speech tagging, lemmatization and stopword removal.
-* **_build_model_**:
+* **_build_model_**: A pipeline that counts how often tokens occur, weights them and classifies accross multiple categories
 
 ## ETL Pipeline
 ### Components
