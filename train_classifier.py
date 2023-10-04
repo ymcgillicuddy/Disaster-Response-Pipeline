@@ -20,8 +20,16 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import classification_report
 
+
 def load_data(database_filepath):
-    pass
+    '''
+    Reads in a SQL database and defines X and Y values ahead of building a data model
+    '''
+    engine = create_engine('sqlite:///' + database_filepath)
+    df = pd.read_sql_table(database_filepath, 'sqlite:///' + database_filepath)
+    X = df['message'].values #define X values
+    Y = df[df.columns[4:]].astype('int') #define Y values
+    return X, Y
 
 
 def tokenize(text):
