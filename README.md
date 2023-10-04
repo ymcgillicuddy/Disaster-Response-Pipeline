@@ -30,5 +30,7 @@ To utilise the notebook you will need to ensure that you have the following inst
 
 ## ML Pipeline
 ### Components
+* Jupyter Notebook?
+* Python file - 'train_classifier.py'
 
 ### Requirements
