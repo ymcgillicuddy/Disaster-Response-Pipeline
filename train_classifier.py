@@ -33,7 +33,21 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-    pass
+    '''
+    Uses natural language toolkit (NLTK) to...
+    Convert a body of text to lower case
+    Create a list of words (tokenisation)
+    Tag the parts of speech (POS) e.g. nouns, verbs
+    Remove verb stems for consistency (lemmatization)
+    Remove stopwords that aren't valuable for analysis
+    '''
+    text = re.sub(r"[^a-zA-Z0-9]", " ", str(text).lower()) 
+    tokens = word_tokenize(text)
+    tokens = pos_tag(tokens, tagset='universal')
+    lemmed = [WordNetLemmatizer().lemmatize(tok[0], pos='v') for tok in tokens]
+    lemmed = [l for l in lemmed if l not in stopwords.words ("english")]
+    
+    return lemmed
 
 
 def build_model():
