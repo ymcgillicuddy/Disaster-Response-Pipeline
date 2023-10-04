@@ -50,8 +50,19 @@ def tokenize(text):
     return lemmed
 
 
-def build_model():
-    pass
+def build_model(lemmed):
+    '''
+    Utilises the tokenize function output as a custom tokenizer within a pipeline that...
+    Counts each time an instance occurs using CountVectorizer
+    Weights those counts using TfidfTransformer
+    Uses the RandomForestClassifier to classify each instance across all available categories in the dataset
+    '''
+    pipeline = Pipeline([
+        ('t_count', CountVectorizer(tokenizer=tokenize)),
+        ('weighted', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(RandomForestClassifier(),n_jobs = -1)),
+    ])
+    return pipeline
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
