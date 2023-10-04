@@ -3,7 +3,7 @@ Udacity Data Science Project 2
 
 ## Overview
 The ETL Pipeline reads in two data files containing social media data about natural disasters and prepares them for the ML Pipeline.
-The ML Pipeline reads in the SQL database created by the ETL Pipeline and runs the message text through a ML model...
+The ML Pipeline reads in the SQL database created by the ETL Pipeline and runs the message text through a ML model and builds/evaluates a classification model to predict categories based on message text.
 Details on both pipelines are separated below for clarity.
 
 The ETL Pipline contains functions that:
@@ -15,6 +15,7 @@ The ML Pipeline contains functions that:
 * **_load_data_**: Loads in the SQL database and defines X and Y values
 * **_tokenize_**: Uses Natural Language Toolkit (NLTK) to standardise text and prepare it for the ML model through tokenization, part-of-speech tagging, lemmatization and stopword removal.
 * **_build_model_**: A pipeline that counts how often tokens occur, weights them and classifies accross multiple categories
+* **_evaluate_model_**: Trains, tests, adjusts and re-fits the pipline model.
 
 ## ETL Pipeline
 ### Components
