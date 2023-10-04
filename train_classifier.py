@@ -50,7 +50,7 @@ def tokenize(text):
     return lemmed
 
 
-def build_model(lemmed):
+def build_model():
     '''
     Utilises the tokenize function output as a custom tokenizer within a pipeline that...
     Counts each time an instance occurs using CountVectorizer
@@ -66,7 +66,28 @@ def build_model(lemmed):
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    pass
+    '''
+    Defines values for test and train data to train the pipeline
+    Returns test scores across all categories data using classification_report
+    Adjusts RandomForestClassifier parameters from pipeline
+    Re-fits to "model".
+    '''
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, random_state=36) #split into train and test data
+    pipeline.fit(X_train, Y_train) #train pipeline
+
+    Y_pred = pipeline.predict(X_test)
+    category_names = Y_test.columns 
+    cr = classification_report(Y_test, pd.DataFrame(Y_pred, category_names), target_names=category_names)
+    print(cr)
+    #returns f1 score, precision and recall by iterating through all category columns
+
+    parameters = {'clf__estimator__n_estimators': [5]
+             }
+    cv = GridSearchCV(pipeline, param_grid=parameters)
+    model = cv.fit(X_train, Y_train)
+    #uses GridSearch CV to try different parameters against the RandomForestClassifier in the model
+
+    return model
 
 
 def save_model(model, model_filepath):
