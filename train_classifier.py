@@ -1,5 +1,24 @@
 import sys
+import re
+import nltk
+nltk.download(['wordnet','stopwords','punkt','averaged_perceptron_tagger','universal_tagset'])
 
+import sqlite3
+import sqlalchemy
+from sqlalchemy import create_engine
+import pandas as pd
+
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
+from nltk import pos_tag
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.metrics import classification_report
 
 def load_data(database_filepath):
     pass
