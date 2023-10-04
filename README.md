@@ -7,13 +7,13 @@ The ML Pipeline reads in the SQL database created by the ETL Pipeline, ...
 Details on both pipelines are separated below for clarity.
 
 The ETL Pipline contains functions that:
-* **_load_data_**: Load in & merge the data files
-* **_clean_data_**: Parse out a compound "categories column" into 36 binary columns, that are then joined back onto the dataframe, with some non-binary records, un-helpful columns and duplicated records dropped.
+* **_load_data_**: Loads in & merges the data files
+* **_clean_data_**: Parses out a compound "categories column" into 36 binary columns, that are then joined back onto the dataframe, with some non-binary records, un-helpful columns and duplicated records dropped.
 * **_save_data_**: Outputs the dataframe to a SQL database at a given filepath
 
 The ML Pipeline contains functions that:
-*
-*
+* **_load_data_**: Loads in the SQL database and defines X and Y values
+* **_tokenize_**: 
 
 ## ETL Pipeline
 ### Components
