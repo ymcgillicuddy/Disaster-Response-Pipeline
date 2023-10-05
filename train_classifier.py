@@ -20,6 +20,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import classification_report
 
+import pickle
 
 def load_data(database_filepath):
     '''
@@ -77,21 +78,29 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
     Y_pred = pipeline.predict(X_test)
     category_names = Y_test.columns 
-    cr = classification_report(Y_test, pd.DataFrame(Y_pred, category_names), target_names=category_names)
+    cr = classification_report(Y_test, pd.DataFrame(Y_pred, columns=category_names), target_names=category_names)
     print(cr)
     #returns f1 score, precision and recall by iterating through all category columns
 
-    parameters = {'clf__estimator__n_estimators': [5]
+    parameters = {'clf__estimator__n_estimators': [50,100,200]
              }
-    cv = GridSearchCV(pipeline, param_grid=parameters)
+    cv = GridSearchCV(pipeline, param_grid=parameters, cv=2)
     model = cv.fit(X_train, Y_train)
     #uses GridSearch CV to try different parameters against the RandomForestClassifier in the model
 
+    Y_pred = model.predict(X_test)
+    cr = classification_report(Y_test, pd.DataFrame(Y_pred, columns=category_names), target_names=category_names)
+    print(cr)
+    #returns f1 score, precision and recall of the tuned model
     return model
 
 
 def save_model(model, model_filepath):
-    pass
+    '''
+    Takes the model data and a filepath and saves to that filepath as a pickle file
+    '''
+    with open(model_filepath, 'wb') as model_filepath:
+    pickle.dump(model, model_filepath)
 
 
 def main():
@@ -106,6 +115,9 @@ def main():
         
         print('Training model...')
         model.fit(X_train, Y_train)
+
+        print('CV parameters...')
+        print(cv.best_params_)
         
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
