@@ -16,6 +16,7 @@ The ML Pipeline contains functions that:
 * **_tokenize_**: Uses Natural Language Toolkit (NLTK) to standardise text and prepare it for the ML model through tokenization, part-of-speech tagging, lemmatization and stopword removal.
 * **_build_model_**: A pipeline that counts how often tokens occur, weights them and classifies accross multiple categories
 * **_evaluate_model_**: Trains, tests, adjusts and re-fits the pipline model.
+* **_save_model_**: Saves the tuned model to a pickle file
 
 ## ETL Pipeline
 ### Components
@@ -38,6 +39,7 @@ Running the python file locally causes a key error that does not occur when runn
 * Jupyter Notebook?
 * Python file - 'train_classifier.py'
 * SQL database - 'DisasterResponse.db' - **_input_**
+* Pickle file - 'classifier.pkl' - **_output_**
 
 ### Requirements
 To run the train_classifier.py code you will need to ensure that you have the following installed in your environment:
@@ -47,3 +49,4 @@ To run the train_classifier.py code you will need to ensure that you have the fo
 * sqlalchemy
 * pandas
 * sklearn
+* pickle
