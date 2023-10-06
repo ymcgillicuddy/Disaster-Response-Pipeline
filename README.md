@@ -4,9 +4,9 @@ Udacity Data Science Project 2
 ## Overview
 The ETL Pipeline reads in two data files containing social media data about natural disasters and prepares them for the ML Pipeline.
 
-The ML Pipeline reads in the SQL database created by the ETL Pipeline and runs the message text through a ML model and builds/evaluates a classification model to predict categories based on message text.
+The ML Pipeline reads in the SQL database created by the ETL Pipeline and runs the message text through a ML model and builds/evaluates a classification model to predict aid categories based on message text.
 
-The web app....
+The web app allows the user to enter message text and see how the model classifies that against the different aid categories in the dataset
 
 Details on all elements are separated below for clarity.
 
@@ -22,9 +22,9 @@ The ML Pipeline contains functions that:
 * **_evaluate_model_**: Returns an evaluation of the model's performance
 * **_save_model_**: Saves the tuned model to a pickle file
 
-The web app....:
-* hh
-*  
+The web app...
+* imports the database from the ETL Pipeline and the model from the ML pipeline
+* ...
 
 ## Universal Requirements
 The following are required to run all python elements of this pipeline.  To view which are required for each code, view the import statements at the start of the code.
@@ -38,6 +38,7 @@ The following are required to run all python elements of this pipeline.  To view
 * json - **_web app only_**
 * plotly - **_web app only_**
 * flask - **_web app only_**
+* joblib - **_web app only_**
 
 ## ETL Pipeline
 ### Components
@@ -58,3 +59,5 @@ Running the python file locally causes a key error that does not occur when runn
 ## Web App
 ### Components
 * Python file - 'python run.py'
+* SQL database - 'DisasterResponse.db' - **_input_**
+* Pickle file - 'classifier.pkl' - **_input_**
