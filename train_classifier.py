@@ -24,13 +24,14 @@ import pickle
 
 def load_data(database_filepath):
     '''
-    Reads in a SQL database and defines X and Y values ahead of building a data model
+    Reads in a SQL database and defines X, Y and category_names values ahead of building a data model
     '''
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table(database_filepath, 'sqlite:///' + database_filepath)
     X = df['message'].values #define X values
     Y = df[df.columns[4:]].astype('int') #define Y values
-    return X, Y
+    category_names = Y.columns
+    return X, Y, category_names
 
 
 def tokenize(text):
@@ -57,50 +58,39 @@ def build_model():
     Counts each time an instance occurs using CountVectorizer
     Weights those counts using TfidfTransformer
     Uses the RandomForestClassifier to classify each instance across all available categories in the dataset
+
+    Utilises GridSearch CV to test alternative parameters
     '''
     pipeline = Pipeline([
         ('t_count', CountVectorizer(tokenizer=tokenize)),
         ('weighted', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier(),n_jobs = -1)),
     ])
-    return pipeline
+    parameters = {'clf__estimator__n_estimators': [50,100,200]
+    }
+    cv = GridSearchCV(pipeline, param_grid=parameters, cv=2)
+    #uses GridSearch CV to try different parameters against the RandomForestClassifier in the model
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
     '''
-    Defines values for test and train data to train the pipeline
-    Returns test scores across all categories data using classification_report
-    Adjusts RandomForestClassifier parameters from pipeline
-    Re-fits to "model".
+    Returns the model's test scores across all categories data using classification_report
+    Returns the best parameters
     '''
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, random_state=36) #split into train and test data
-    pipeline.fit(X_train, Y_train) #train pipeline
-
-    Y_pred = pipeline.predict(X_test)
-    category_names = Y_test.columns 
+    Y_pred = model.predict(X_test) 
     cr = classification_report(Y_test, pd.DataFrame(Y_pred, columns=category_names), target_names=category_names)
+    #stores f1 score, precision and recall by iterating through all category columns
     print(cr)
-    #returns f1 score, precision and recall by iterating through all category columns
-
-    parameters = {'clf__estimator__n_estimators': [50,100,200]
-             }
-    cv = GridSearchCV(pipeline, param_grid=parameters, cv=2)
-    model = cv.fit(X_train, Y_train)
-    #uses GridSearch CV to try different parameters against the RandomForestClassifier in the model
-
-    Y_pred = model.predict(X_test)
-    cr = classification_report(Y_test, pd.DataFrame(Y_pred, columns=category_names), target_names=category_names)
-    print(cr)
-    #returns f1 score, precision and recall of the tuned model
-    return model
+    print(model.best_params_)
 
 
 def save_model(model, model_filepath):
     '''
-    Takes the model data and a filepath and saves to that filepath as a pickle file
+    Saves the model to the given filepath as a pickle file
     '''
     with open(model_filepath, 'wb') as model_filepath:
-    pickle.dump(model, model_filepath)
+        pickle.dump(model, model_filepath)
 
 
 def main():
@@ -115,13 +105,10 @@ def main():
         
         print('Training model...')
         model.fit(X_train, Y_train)
-
-        print('CV parameters...')
-        print(cv.best_params_)
         
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
-
+    
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
 
