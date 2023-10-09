@@ -22,9 +22,10 @@ The ML Pipeline contains functions that:
 * **_evaluate_model_**: Returns an evaluation of the model's performance
 * **_save_model_**: Saves the tuned model to a pickle file
 
-The web app...
+The web app:
 * imports the database from the ETL Pipeline and the model from the ML pipeline
-* ...
+* generates some data visualisations from the SQL data table
+* generates an interface for users to interact with the ML model
 
 ## Universal Requirements
 The following are required to run all python elements of this pipeline.  To view which are required for each code, view the import statements at the start of the code.
@@ -41,23 +42,40 @@ The following are required to run all python elements of this pipeline.  To view
 * joblib - **_web app only_**
 
 ## ETL Pipeline
-### Components
+### Components & Implementation
 * Python file - 'process_data.py'
-* CSV files - 'messages.csv', 'categories.csv' - **_input_**
-* SQL database - 'DisasterResponse.db' - **_output_**
-* Jupyter Notebook - 'ETL Pipeline Preparation.ipynb' - included to show data exploration process
+* CSV files - 'messages.csv', 'categories.csv' - **_input files_**
+
+**Suggestion for running:**  save the python files and CSV files to a sub-folder "data", then direct your terminal to the project's root directory and pass the following string:
+
+```python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db```
+
+This outputs a SQL database - 'DisasterResponse.db' - to the data folder
+
+A Jupyter Notebook - 'ETL Pipeline Preparation.ipynb' - is included in this repo to show data exploration process.
 
 ### Known Bugs
 Running the python file locally causes a key error that does not occur when running the modular code in Jupyter Notebook.  Running the python file in an IDE environment also works as intended.  It's not currently clear to me what is causing this discrepancy.
 
 ## ML Pipeline
-### Components
+### Components & Implementation
 * Python file - 'train_classifier.py'
-* SQL database - 'DisasterResponse.db' - **_input_**
-* Pickle file - 'classifier.pkl' - **_output_**
+* SQL database - 'DisasterResponse.db' - **_output from the ETL Pipeline_**
+
+**Suggestion for running:**  save the python file to a sub-folder "models", then direct your terminal to the project's root directory and pass the following string:
+
+```python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl```
+
+This outputs a pickle file - 'classifier.pkl' - to the models folder
 
 ## Web App
 ### Components
 * Python file - 'python run.py'
-* SQL database - 'DisasterResponse.db' - **_input_**
-* Pickle file - 'classifier.pkl' - **_input_**
+* SQL database - 'DisasterResponse.db' - **_output from the ETL Pipeline_**
+* Pickle file - 'classifier.pkl' - **_output from the ML Pipeline_**
+
+**Suggestion for running:** save the python file to a sub-folder "app", then direct your terminal to this location and run the python file
+
+```python run.py```
+
+Click on the http address returned to open the homepage
