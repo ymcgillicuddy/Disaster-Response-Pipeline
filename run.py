@@ -8,7 +8,7 @@ from nltk.tokenize import word_tokenize
 
 from flask import Flask
 from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
+from plotly.graph_objs import Bar, Pie
 from sqlalchemy import create_engine
 
 
@@ -42,6 +42,7 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    categories = df[df.columns[4:]].astype('int')
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -49,19 +50,35 @@ def index():
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+                    x=categories.sum().sort_values(ascending = False).head(10),
+                    y=categories.columns,
+                    orientation = 'h'
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': '10 Most Frequent Categories',
+                'margin': dict(t=50),
                 'yaxis': {
-                    'title': "Count"
+                    'title': "Category",
+                    'categoryorder': "total ascending",
+                    'automargin': True,
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "Frequency"               
                 }
+            }
+        },
+        {
+            'data': [
+                Pie(
+                    labels=genre_names,
+                    values=genre_counts
+                )
+            ],
+            'layout': {
+                'title': 'Distribution of Genres',
+                
             }
         }
     ]
