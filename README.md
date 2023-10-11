@@ -75,7 +75,7 @@ This outputs a pickle file - 'classifier.pkl' - to the models folder
 * SQL database - 'DisasterResponse.db' - **_output from the ETL Pipeline_**
 * Pickle file - 'classifier.pkl' - **_output from the ML Pipeline_**
 
-**Suggestion for running:** Direct your terminal to the "app" folder and run the python file as follows:
+**Suggestion for running:** You will need to run the ML Pipeline first to generate the pickle file, as that was too large to upload to this repo.  To run the web app, direct your terminal to the "app" folder and run the python file as follows:
 
 ```python run.py```
 
