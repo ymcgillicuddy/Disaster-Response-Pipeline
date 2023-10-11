@@ -28,8 +28,8 @@ def clean_data(df):
 
     row = categories.iloc[0] # select the first row of the categories dataframe
 
-    category_colnames = row[lambda x : x.str.slice(0,-2)] 
-    categories.columns = category_colnames.index
+    row["category_colnames"] = categories.iloc[0].str.slice(0,-2)
+    categories.columns = row["category_colnames"]
     #slice off last 2 characters from first row to generate column headers
 
     for column in categories:
