@@ -43,10 +43,10 @@ The following are required to run all python elements of this pipeline.  To view
 
 ## ETL Pipeline
 ### Components & Implementation
-* Python file - 'process_data.py'
-* CSV files - 'messages.csv', 'categories.csv' - **_input files_**
+* Python file - 'data/process_data.py'
+* CSV files - 'data/messages.csv', 'data/categories.csv' - **_input files_**
 
-**Suggestion for running:**  save the python files and CSV files to a sub-folder "data", then direct your terminal to the project's root directory and pass the following string:
+**Suggestion for running:**  Direct your terminal to the project's root directory and pass the following string:
 
 ```python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db```
 
@@ -59,10 +59,10 @@ Running the python file locally causes a key error that does not occur when runn
 
 ## ML Pipeline
 ### Components & Implementation
-* Python file - 'train_classifier.py'
-* SQL database - 'DisasterResponse.db' - **_output from the ETL Pipeline_**
+* Python file - 'models/train_classifier.py'
+* SQL database - 'data/DisasterResponse.db' - **_output from the ETL Pipeline_**
 
-**Suggestion for running:**  save the python file to a sub-folder "models", then direct your terminal to the project's root directory and pass the following string:
+**Suggestion for running:**  Direct your terminal to the project's root directory and pass the following string:
 
 ```python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl```
 
@@ -70,11 +70,12 @@ This outputs a pickle file - 'classifier.pkl' - to the models folder
 
 ## Web App
 ### Components
-* Python file - 'python run.py'
+* Python file - 'app/python run.py'
+* HTML files - 'app/templates/go.html', 'app/templates/master.html'
 * SQL database - 'DisasterResponse.db' - **_output from the ETL Pipeline_**
 * Pickle file - 'classifier.pkl' - **_output from the ML Pipeline_**
 
-**Suggestion for running:** save the python file to a sub-folder "app", then direct your terminal to this location and run the python file
+**Suggestion for running:** Direct your terminal to the "app" folder and run the python file as follows:
 
 ```python run.py```
 
